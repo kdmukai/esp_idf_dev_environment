@@ -51,3 +51,15 @@ in the container.
 
 You can exit the container context via Command Palette -> "Dev Containers: Reopen Folder
 Locally".
+
+
+# Build and Flash
+## Build
+In the Dev Container context, VSCode will have the ESP-IDF extension active. Click it and select "Build Project".
+
+## Flash
+Exit the Dev Container context. We'll use our local dev `esptool` from the python virtualenv to flash the device:
+
+```bash
+python -m esptool --chip esp32s3 -b 460800 --before default-reset --after hard-reset write-flash --flash-mode dio --flash-size detect --flash-freq 40m 0x0 build/bootloader/bootloader.bin 0x8000 build/partition_table/partition-table.bin 0x10000 build/lvgl_example.bin
+```
